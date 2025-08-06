@@ -25,6 +25,8 @@ A Chrome extension designed specifically for NTU CCDS Master students to extract
 
 1. Navigate to the NTU CCDS Master projects page:  
    `https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options`
+   But to access this page, you need to access from `https://wis.ntu.edu.sg/webexe/owa/eservices_search.index_search?t=3&p_name=CCDS` first.
+   (If you are not on the page, the extension will not work.)
 
 2. Click the extension icon in your Chrome toolbar
 
@@ -67,32 +69,11 @@ The extension converts each project into the following format:
 ---
 ```
 
-## Project Structure
-
-```
-src/
-├── pages/
-│   ├── Background/      # Background service worker
-│   ├── Content/         # Content script for data extraction
-│   │   └── index.js    # Main extraction logic
-│   └── Popup/          # Extension popup interface
-│       ├── Popup.jsx   # Main popup component with search
-│       └── Popup.css   # Popup styles
-└── manifest.json       # Extension manifest
-```
-
-## Key Files
-
-- **`Content/index.js`**: Core extraction logic without UI injection
-- **`Popup.jsx`**: Main interface with search, extraction, and results display
-- **`Popup.css`**: Styling for the popup interface
-- **`manifest.json`**: Extension configuration
-
 ## Development
 
 ### Prerequisites
-- Node.js >= 18
-- npm or yarn
+- Node.js v20.17.0
+- npm
 
 ### Commands
 - `npm start` - Run in development mode with hot reload
