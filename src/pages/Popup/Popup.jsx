@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Popup.css';
 
 const Popup = () => {
@@ -41,6 +41,13 @@ const Popup = () => {
     
     // Send message to content script to extract data
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs[0]) {
+        setIsExtracting(false);
+        alert('No active tab found');
+        return;
+      }
+      
+      // First, try to inject the content script if it's not already injected
       chrome.tabs.sendMessage(
         tabs[0].id,
         { 
@@ -48,24 +55,55 @@ const Popup = () => {
           searchTerm: searchTerm.trim() 
         },
         (response) => {
-          setIsExtracting(false);
-          
-          if (response && response.success) {
-            setMarkdown(response.markdown);
-            setLastExtractedCount(response.count);
-            setShowResults(true);
+          // Check for chrome runtime errors
+          if (chrome.runtime.lastError) {
+            console.error('Chrome runtime error:', chrome.runtime.lastError);
             
-            // Save to storage
-            chrome.storage.local.set({
-              lastExtractedCount: response.count,
-              lastMarkdown: response.markdown
+            // Try to inject the content script manually
+            chrome.scripting.executeScript({
+              target: { tabId: tabs[0].id },
+              files: ['contentScript.bundle.js']
+            }, () => {
+              // After injection, try sending the message again
+              setTimeout(() => {
+                chrome.tabs.sendMessage(
+                  tabs[0].id,
+                  { 
+                    action: 'extractProjects', 
+                    searchTerm: searchTerm.trim() 
+                  },
+                  (retryResponse) => {
+                    setIsExtracting(false);
+                    handleResponse(retryResponse);
+                  }
+                );
+              }, 100);
             });
-          } else if (response && response.error) {
-            alert(response.error);
+          } else {
+            setIsExtracting(false);
+            handleResponse(response);
           }
         }
       );
     });
+  };
+  
+  const handleResponse = (response) => {
+    if (response && response.success) {
+      setMarkdown(response.markdown);
+      setLastExtractedCount(response.count);
+      setShowResults(true);
+      
+      // Save to storage
+      chrome.storage.local.set({
+        lastExtractedCount: response.count,
+        lastMarkdown: response.markdown
+      });
+    } else if (response && response.error) {
+      alert(response.error);
+    } else {
+      alert('Failed to extract projects. Please refresh the page and try again.');
+    }
   };
 
   const handleCopyToClipboard = () => {

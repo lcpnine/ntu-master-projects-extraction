@@ -12,16 +12,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options"],
+      "matches": [
+        "https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options"
+      ],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
   ],
-  "permissions": [
-    "clipboardWrite",
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["clipboardWrite", "storage", "tabs", "scripting"],
+  "host_permissions": ["https://wis.ntu.edu.sg/*"],
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
