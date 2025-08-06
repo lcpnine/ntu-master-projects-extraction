@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "ntu-ccds-master-project-extractor-chrome-extension",
   "version": "5.0.4",
-  "description": "A chrome extension boilerplate built with React 18, Webpack 5, and Webpack Dev Server 4",
+  "description": "NTU CCDS Master Project Extractor Chrome Extension",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/lcpnine/ntu-master-projects-extraction"
   },
   "scripts": {
     "build": "node utils/build.js",

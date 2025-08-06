@@ -1,6 +1,11 @@
-import { printLine } from './modules/print';
+import './content.styles.css';
+import { initExtractor } from './modules/extractor';
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
+console.log('NTU Project Extractor loaded!');
 
-printLine("Using the 'printLine' function from the Print Module");
+// Wait for the page to load completely
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initExtractor);
+} else {
+  initExtractor();
+}

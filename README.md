@@ -1,150 +1,139 @@
-<img src="src/assets/img/icon-128.png" width="64"/>
+# NTU CCDS Master Project Extractor Chrome Extension
 
-# Chrome Extension (MV3) Boilerplate with React 18 and Webpack 5
-
-[![npm](https://img.shields.io/npm/v/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
-[![npm-download](https://img.shields.io/npm/dw/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
-[![npm](https://img.shields.io/npm/dm/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
-
-## Announcements
-
-- Recently updated from **[React](https://reactjs.org)** ~~17~~ to **18**!
-- **_This boilerplate adopts [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/)!_**
-  - For V2 users, please check out the [manifest-v2](https://github.com/lxieyang/chrome-extension-boilerplate-react/tree/manifest-v2) branch, or use version [3.x](https://www.npmjs.com/package/chrome-extension-boilerplate-react/v/3.3.0).
-  - Check out the [Manifest V3 Migration Guide](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-migration/).
-- Recently added [devtools](https://developer.chrome.com/docs/extensions/mv3/devtools/) Support! Thanks [GeekaholicLin](https://github.com/lxieyang/chrome-extension-boilerplate-react/issues/17)!
-- Recently updated from **[Webpack Dev Server](https://webpack.js.org/configuration/dev-server/)** ~~3.x~~ to **4.x** and **[Webpack](https://webpack.js.org/)** ~~4~~ to **5**!
-- Recently added [TypeScript](https://www.typescriptlang.org/) Support!
+A Chrome extension designed specifically for NTU CCDS Master students to extract, filter, and convert project information from the NTU SCE website into clean Markdown format.
 
 ## Features
 
-This is a basic Chrome Extensions boilerplate to help you write modular and modern Javascript code, load CSS easily and [automatic reload the browser on code changes](https://webpack.github.io/docs/webpack-dev-server.html#automatic-refresh).
+- 🔍 **Smart Search**: Filter projects by keywords across all fields
+- 📝 **Markdown Export**: Convert project data into well-formatted Markdown
+- 📋 **Quick Copy**: Copy extracted content to clipboard with one click
+- 💾 **Download Option**: Save extracted projects as `.md` files
+- 🎨 **Beautiful UI**: Clean, modern interface with collapsible panel
+- ⚡ **Instant Results**: Real-time extraction without page reload
 
-This boilerplate is updated with:
+## Installation
 
-- [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/)
-- [React 18](https://reactjs.org)
-- [Webpack 5](https://webpack.js.org/)
-- [Webpack Dev Server 4](https://webpack.js.org/configuration/dev-server/)
-- [React Refresh](https://www.npmjs.com/package/react-refresh)
-- [react-refresh-webpack-plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin)
-- [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)
-- [Prettier](https://prettier.io/)
-- [TypeScript](https://www.typescriptlang.org/)
+1. Clone or download this repository
+2. Run `npm install` to install dependencies
+3. Run `npm start` for development mode or `npm run build` for production
+4. Open Chrome and navigate to `chrome://extensions/`
+5. Enable "Developer mode" in the top right
+6. Click "Load unpacked" and select the `build` folder
 
-This boilerplate is heavily inspired by and adapted from [https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate), with additional support for React 18 features, Webpack 5, and Webpack Dev Server 4.
+## Usage
 
-Please open up an issue to nudge me to keep the npm packages up-to-date. FYI, it takes time to make different packages with different versions work together nicely.
+1. Navigate to the NTU CCDS Master projects page:  
+   `https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options`
 
-## Installing and Running
+2. The extractor panel will automatically appear at the top of the page
 
-### Procedures:
+3. **To extract projects:**
+   - Leave search field empty to extract ALL projects
+   - Enter keywords to filter specific projects
+   - Click "Extract to Markdown" or press Enter
 
-1. Check if your [Node.js](https://nodejs.org/) version is >= **18**.
-2. Clone this repository.
-3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
-4. Change the name of your extension on `src/manifest.json`.
-5. Run `npm install` to install the dependencies.
-6. Run `npm start`
-7. Load your extension on Chrome following:
-   1. Access `chrome://extensions/`
-   2. Check `Developer mode`
-   3. Click on `Load unpacked extension`
-   4. Select the `build` folder.
-8. Happy hacking.
+4. **Export options:**
+   - Click "Copy to Clipboard" to copy the markdown
+   - Click "Download MD" to save as a file
 
-## Structure
+## Markdown Format
 
-All your extension's code must be placed in the `src` folder.
+The extension converts each project into the following format:
 
-The boilerplate is already prepared to have a popup, an options page, a background page, and a new tab page (which replaces the new tab page of your browser). But feel free to customize these.
+```markdown
+# [S/No]. [Topic]
 
-## TypeScript
+## [Department] | [Supervisor]
 
-This boilerplate now supports TypeScript! The `Options` Page is implemented using TypeScript. Please refer to `src/pages/Options/` for example usages.
+**Type:** [Project Type] | **Status:** [Status]
 
-## Webpack auto-reload and HRM
+## Summary
 
-To make your workflow much more efficient this boilerplate uses the [webpack server](https://webpack.github.io/docs/webpack-dev-server.html) to development (started with `npm start`) with auto reload feature that reloads the browser automatically every time that you save some file in your editor.
+[Project summary content]
 
-You can run the dev mode on other port if you want. Just specify the env var `port` like this:
+## Pre-requisites
 
-```
-$ PORT=6002 npm run start
-```
+[Prerequisites content]
 
-## Content Scripts
-
-Although this boilerplate uses the webpack dev server, it's also prepared to write all your bundles files on the disk at every code change, so you can point, on your extension manifest, to your bundles that you want to use as [content scripts](https://developer.chrome.com/extensions/content_scripts), but you need to exclude these entry points from hot reloading [(why?)](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/issues/4#issuecomment-261788690). To do so you need to expose which entry points are content scripts on the `webpack.config.js` using the `chromeExtensionBoilerplate -> notHotReload` config. Look the example below.
-
-Let's say that you want use the `myContentScript` entry point as content script, so on your `webpack.config.js` you will configure the entry point and exclude it from hot reloading, like this:
-
-```js
-{
-  …
-  entry: {
-    myContentScript: "./src/js/myContentScript.js"
-  },
-  chromeExtensionBoilerplate: {
-    notHotReload: ["myContentScript"]
-  }
-  …
-}
+---
 ```
 
-and on your `src/manifest.json`:
-
-```json
-{
-  "content_scripts": [
-    {
-      "matches": ["https://www.google.com/*"],
-      "js": ["myContentScript.bundle.js"]
-    }
-  ]
-}
-```
-
-## Intelligent Code Completion
-
-Thanks to [@hudidit](https://github.com/lxieyang/chrome-extension-boilerplate-react/issues/4)'s kind suggestions, this boilerplate supports chrome-specific intelligent code completion using [@types/chrome](https://www.npmjs.com/package/@types/chrome).
-
-## Packing
-
-After the development of your extension run the command
+## Project Structure
 
 ```
-$ NODE_ENV=production npm run build
+src/
+├── pages/
+│   ├── Background/      # Background service worker
+│   ├── Content/         # Content script and extractor module
+│   │   ├── index.js    # Main content script
+│   │   ├── modules/
+│   │   │   └── extractor.js  # Core extraction logic
+│   │   └── content.styles.css # Extractor UI styles
+│   └── Popup/          # Extension popup
+│       ├── Popup.jsx   # Popup component
+│       └── Popup.css   # Popup styles
+└── manifest.json       # Extension manifest
 ```
 
-Now, the content of `build` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
+## Key Files
 
-## Secrets
+- **`extractor.js`**: Core extraction logic and UI creation
+- **`content.styles.css`**: Styling for the extractor panel
+- **`Popup.jsx`**: Extension popup interface
+- **`manifest.json`**: Extension configuration
 
-If you are developing an extension that talks with some API you probably are using different keys for testing and production. Is a good practice you not commit your secret keys and expose to anyone that have access to the repository.
+## Development
 
-To this task this boilerplate import the file `./secrets.<THE-NODE_ENV>.js` on your modules through the module named as `secrets`, so you can do things like this:
+### Prerequisites
+- Node.js >= 18
+- npm or yarn
 
-_./secrets.development.js_
+### Commands
+- `npm start` - Run in development mode with hot reload
+- `npm run build` - Build for production
+- `npm run prettier` - Format code
 
-```js
-export default { key: '123' };
-```
+### Customization
 
-_./src/popup.js_
+You can customize the extraction format by modifying the `generateMarkdown` function in `src/pages/Content/modules/extractor.js`.
 
-```js
-import secrets from 'secrets';
-ApiCall({ key: secrets.key });
-```
+## Technical Details
 
-:point_right: The files with name `secrets.*.js` already are ignored on the repository.
+- Built with React 18 and Webpack 5
+- Uses Chrome Extension Manifest V3
+- Implements content script injection for seamless integration
+- Utilizes Chrome Storage API for persistence
 
-## Resources:
+## Permissions
 
-- [Webpack documentation](https://webpack.js.org/concepts/)
-- [Chrome Extension documentation](https://developer.chrome.com/extensions/getstarted)
+The extension requires the following permissions:
+- `clipboardWrite`: To copy markdown to clipboard
+- `storage`: To save extraction statistics
+- `tabs`: To detect if user is on the correct page
+
+## Troubleshooting
+
+**Extension not appearing on the page?**
+- Ensure you're on the exact URL: `https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options`
+- Refresh the page after installing the extension
+- Check if the extension is enabled in Chrome
+
+**Search not working?**
+- The search is case-insensitive and searches across all fields
+- Make sure the table is fully loaded before searching
+
+**Can't copy to clipboard?**
+- Ensure the browser has clipboard permissions
+- Try using the download option instead
+
+## License
+
+MIT License - Feel free to modify and distribute as needed.
+
+## Support
+
+For issues or suggestions, please create an issue in the repository.
 
 ---
 
-Michael Xieyang Liu | [Website](https://lxieyang.github.io)
+Made with ❤️ for NTU CCDS Master Students

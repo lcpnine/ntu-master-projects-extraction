@@ -1,31 +1,31 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Extension with React & Webpack",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
-  "options_page": "options.html",
+  "name": "NTU CCDS Master Project Extractor",
+  "description": "Extract and filter NTU CCDS Master project information to markdown format",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
-  },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
   },
   "icons": {
     "128": "icon-128.png"
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["https://wis.ntu.edu.sg/pls/webexe/mas_sce_student.Filter_Options"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
   ],
-  "devtools_page": "devtools.html",
+  "permissions": [
+    "clipboardWrite",
+    "storage",
+    "tabs"
+  ],
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
-      "matches": []
+      "matches": ["https://wis.ntu.edu.sg/*"]
     }
   ]
 }
