@@ -76,10 +76,6 @@ var options = {
         test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
         type: 'asset/resource',
         exclude: /node_modules/,
-        // loader: 'file-loader',
-        // options: {
-        //   name: '[name].[ext]',
-        // },
       },
       {
         test: /\.html$/,
@@ -129,7 +125,10 @@ var options = {
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
   plugins: [
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    isDevelopment &&
+      new ReactRefreshWebpackPlugin({
+        exclude: /contentScript|background/,
+      }),
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),
     // expose and write the allowed env vars on the compiled bundle
@@ -214,6 +213,15 @@ var options = {
   infrastructureLogging: {
     level: 'info',
   },
+  optimization: {
+    runtimeChunk: false,
+    splitChunks: {
+      chunks(chunk) {
+        // Prevent code splitting for contentScript and background
+        return !['contentScript', 'background'].includes(chunk.name);
+      },
+    },
+  },
 };
 
 if (env.NODE_ENV === 'development') {
@@ -226,6 +234,12 @@ if (env.NODE_ENV === 'development') {
         extractComments: false,
       }),
     ],
+    runtimeChunk: false,
+    splitChunks: {
+      chunks(chunk) {
+        return !['contentScript', 'background'].includes(chunk.name);
+      },
+    },
   };
 }
 
